@@ -4,6 +4,9 @@ from datetime import datetime
 from .forms import ProfesorForm
 from .models import *
 
+def home(request):
+    return render(request, 'home/index.html')
+
 def list_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, 'profesor/list_profesor.html', {'profesores': profesores})

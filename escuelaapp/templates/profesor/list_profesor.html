@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado Profesor</title>
-</head>
-<body>
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Listar Profesor
+{% endblock titulo %}
+{% block cuerpo %}
     <table>
         <tr>
             <th>Id</th>
@@ -25,5 +22,4 @@
         </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock cuerpo %}

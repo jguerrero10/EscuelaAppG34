@@ -3,23 +3,35 @@
 {% block titulo %}
     Listar Profesor
 {% endblock titulo %}
+
+{% block pagina %}
+    Profesores
+{% endblock pagina %}
+    
 {% block cuerpo %}
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Cod. Profesor</th>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-        </tr>
-        {%  for profesor in profesores %}
-        <tr>
-            <td>{{profesor.id}}</td>
-            <td>{{profesor.cod_profesor}}</td>
-            <td>{{profesor}}</td>
-            <td>{{ profesor.direccion }}</td>
-            <td>{{ profesor.telefono }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped-columns">
+            <tr>
+                <th>Id</th>
+                <th>Cod. Profesor</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Opciones</th>
+            </tr>
+            {%  for profesor in profesores %}
+            <tr>
+                <td>{{profesor.id}}</td>
+                <td>{{profesor.cod_profesor}}</td>
+                <td>{{profesor}}</td>
+                <td>{{ profesor.direccion }}</td>
+                <td>{{ profesor.telefono }}</td>
+                <td>
+                    <a href="{% url 'actualizar-profesor' profesor.id %}" class="btn btn-warning">Editar</a>
+                    <a href="" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock cuerpo %}

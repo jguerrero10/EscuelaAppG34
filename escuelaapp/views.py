@@ -3,6 +3,7 @@ from django.shortcuts import render
 from datetime import datetime
 from .forms import ProfesorForm
 from .models import *
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'home/index.html')
@@ -15,7 +16,21 @@ def crear_profesor(request):
     if request.method == 'POST':
         form = ProfesorForm(request.POST)
         if form.is_valid():
-            profesor = form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            nombres = form.cleaned_data['nombres']
+            apellidos = form.cleaned_data['apellidos']
+            user = User.objects.create_user(
+                username=username,
+                password=password,
+                email=email,
+                first_name=nombres,
+                last_name= apellidos
+            )
+            profesor = form.save(commit=False)
+            profesor.user = user
+            profesor.save()
             mensaje = f'El Profesor {profesor} fue agregado correctamente'
         else:
             mensaje = f'El Profesor {profesor} no fue agregado'

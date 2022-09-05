@@ -3,6 +3,12 @@ from django import forms
 from .models import *
 
 class ProfesorForm(forms.ModelForm):
+    username = forms.CharField(max_length=20)
+    password = forms.CharField(max_length=40, widget=(forms.PasswordInput()))
+    email = forms.EmailField()
+    nombres = forms.CharField(max_length=120)
+    apellidos = forms.CharField(max_length=120)
+    
     class Meta:
         model = Profesor
-        fields = '__all__'
+        fields = ['cod_profesor', 'direccion', 'telefono']

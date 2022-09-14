@@ -1,0 +1,31 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Listar Roles
+{% endblock titulo %}
+
+{% block pagina %}
+    Roles
+{% endblock pagina %}
+    
+{% block cuerpo %}
+    <a href="" class="btn btn-primary mb-3">Crear Roles</a>
+    <div class="table-responsive">
+        <table class="table table-striped-columns">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+            </tr>
+            {%  for rol in roles %}
+            <tr>
+                <td>{{rol.id}}</td>
+                <td>{{rol.name}}</td>
+                <td>
+                    <a href="" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'eliminar-rol' rol.id %}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}

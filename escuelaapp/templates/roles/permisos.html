@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Crear Permisos
+{% endblock titulo %}
+
+{% block pagina %}
+    Permisos
+{% endblock pagina %}
+    
+{% block cuerpo %}
+   <form action="{% url 'agregar-permiso' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input name="rol" type="hidden" value="{{rol.id}}"> 
+        <label for="permisos" class="form-label">Permisos: </label>
+        <select id="permisos" name="permisos" class="form-select" multiple>
+            {% for permiso in permisos %}
+                <option value="{{permiso.id}}">{{permiso.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% include 'layout/botones.html' %}
+   </form>
+{% endblock cuerpo %}

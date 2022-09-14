@@ -23,11 +23,26 @@
                             <a class="nav-link" href="{% url 'lista-profesor' %}">Profesores</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'listar-rol' %}">Roles</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="">Contactenos</a>
                         </li>
                     </ul>
                 </div>
             </div>
+            <span class="navbar-text d-flex me-3">
+                {% if user.is_authenticated %}
+                    <div class="me-2">
+                        {{ user.username }}  
+                    </div>                                    
+        
+                    <a href="{% url 'logout' %}" class="link-primary">Salir</a>
+                
+                {% else %}
+                    <a class="link-primary" href="{% url 'login' %}" >Ingresar</a>
+                {% endif %}
+            </span>
         </nav>
     </header>
     <main class="flex-shrink-0">

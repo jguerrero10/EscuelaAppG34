@@ -1,0 +1,20 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Crear Rol
+{% endblock titulo %}
+
+{% block cuerpo %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ form.name.label }}:</label>
+            {{ form.name }}
+        </div>
+        <div class="mb-3">
+            <label for="contenido" class="form-label">{{ form.contenido.label }}:</label>
+            {{ form.contenido }}
+        </div>
+        {% include 'layout/botones.html' %}
+    </form>
+{% endblock cuerpo %}  

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .forms import ProfesorForm, GroupsForm, LoginForm
+from .forms import *
 from django.contrib.auth.models import Permission, User, Group
 from .models import *
 from django.contrib.auth import authenticate, login, logout
@@ -135,3 +135,27 @@ def eliminar_profesor(request, id):
     profesor.delete()
     mensaje = f'El Profesor {profesor} fue eliminado correctamente'
     return render(request, 'profesor/mensaje.html', {'mensaje': mensaje})
+
+@login_required(login_url='/login/')
+def listar_programa(request):
+    programas = Programa.objects.all() # select * from escuelapp_programa
+    return render(request, 'programa/listar_programa.html', {'programas': programas})
+
+@login_required(login_url='/login/')
+def crear_programa(request):
+    if request.method == 'POST':
+        form = ProgramaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Los datos del programa fueron almacenados correctamente") 
+        else:
+            print(form.cleaned_data['nombre'])
+            messages.error(request, "Verifique los datos e intente nuevamente") 
+        return redirect(reverse('listar-programa'))
+    else:
+        form = ProgramaForm()
+        contexto = {
+            'form': form,
+            'accion': 'Crear'
+            }
+        return render(request, 'programa/crear_programa.html', contexto)

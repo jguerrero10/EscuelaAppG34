@@ -1,3 +1,4 @@
+from dataclasses import fields
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django import forms
@@ -84,3 +85,17 @@ class LoginForm(forms.Form):
             'placeholder': 'password'
         }
     ))
+    
+class ProgramaForm(forms.ModelForm):
+    nombre = forms.CharField(max_length=185)
+    descripcion = forms.CharField(widget=forms.Textarea())
+    
+    class Meta:
+        model = Programa
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['placeholder'] = f'{visible.field.label} del programa'

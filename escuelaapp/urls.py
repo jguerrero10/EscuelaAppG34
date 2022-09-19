@@ -12,5 +12,7 @@ urlpatterns = [
     path('crear/profesor/', crear_profesor, name='crear-profesor'),
     path('actualizar/profesor/<int:id>', actualizar_profesor, name='actualizar-profesor'),
     path('eliminar/profesor/<int:id>', eliminar_profesor, name='eliminar-nombre'),
-    path('agregar/permisos', agregar_permisos, name='agregar-permiso')
+    path('agregar/permisos/', agregar_permisos, name='agregar-permiso'),
+    path('listar/programa/', listar_programa, name='listar-programa'),
+    path('crear/programa/', crear_programa, name='crear-programa')
 ]

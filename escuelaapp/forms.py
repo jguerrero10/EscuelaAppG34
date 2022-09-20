@@ -1,6 +1,4 @@
-from dataclasses import fields
-from django.contrib.auth.models import Group
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group, Permission
 from django import forms
 from .models import *
 
@@ -62,11 +60,14 @@ class GroupsForm(forms.ModelForm):
             'class': 'form-control'
         }
     ))
-    contenido = forms.ModelChoiceField(queryset=ContentType.objects.filter(app_label='escuelaapp'), widget=forms.Select(
-        attrs={
-            'class': 'form-select'
-        }
-    ))
+    permisos = forms.ModelMultipleChoiceField(label='Permisos',
+        queryset=Permission.objects.filter(content_type__app_label = 'escuelaapp'), 
+        widget=forms.SelectMultiple(
+            attrs={
+                'class': 'form-select'
+            }
+        )
+    )
     
     class Meta:
         model = Group

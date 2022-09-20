@@ -9,7 +9,8 @@
 {% endblock pagina %}
     
 {% block cuerpo %}
-    <a href="" class="btn btn-primary mb-3">Crear Roles</a>
+    {% include 'layout/mensaje.html' %}
+    <a href="{% url 'crear-rol' %}" class="btn btn-primary mb-3">Crear Roles</a>
     <div class="table-responsive">
         <table class="table table-striped-columns">
             <tr>

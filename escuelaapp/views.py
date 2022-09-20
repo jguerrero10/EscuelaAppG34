@@ -49,18 +49,13 @@ def crear_rol(request):
     if request.method == 'POST':
         form = GroupsForm(request.POST)
         if form.is_valid():
-            rol = form.save()
-            mensaje = 'Rol almacenado correctamente'
-            contenido = form.cleaned_data['contenido']
-            permisos = Permission.objects.filter(content_type=contenido)
-            contexto = {
-                'permisos': permisos,
-                'rol': rol
-                }
-            return render(request, 'roles/permisos.html', contexto)
+            grupo = form.save()
+            permisos = form.cleaned_data['permisos']    
+            grupo.permissions.set(permisos)
+            messages.success(request, "Rol almacenado correctamente")     
         else:
-            mensaje = 'Error al crear Rol'
-            return render(request, 'layout/mensaje.html', {'mensaje': mensaje})
+            messages.error(request, "Error al crear rol")
+        return redirect(reverse('listar-rol'))
     else:
         form = GroupsForm()
         return render(request, 'roles/rolform.html', {'form': form})
@@ -188,5 +183,5 @@ def eliminar_programa(request, id):
     except ObjectDoesNotExist:
         messages.error(request, "El programa no existe en la base de datos")
     return redirect(reverse('listar-programa')) 
-    
+
     

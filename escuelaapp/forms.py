@@ -87,15 +87,13 @@ class LoginForm(forms.Form):
     ))
     
 class ProgramaForm(forms.ModelForm):
-    nombre = forms.CharField(max_length=185)
-    descripcion = forms.CharField(widget=forms.Textarea())
     
     class Meta:
         model = Programa
         fields = '__all__'
     
     def __init__(self, *args, **kwargs):
-        super().__init__()
+        super(ProgramaForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = f'{visible.field.label} del programa'

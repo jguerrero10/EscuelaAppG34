@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     return render(request, 'home/index.html')
@@ -149,7 +150,6 @@ def crear_programa(request):
             form.save()
             messages.success(request, "Los datos del programa fueron almacenados correctamente") 
         else:
-            print(form.cleaned_data['nombre'])
             messages.error(request, "Verifique los datos e intente nuevamente") 
         return redirect(reverse('listar-programa'))
     else:
@@ -158,4 +158,35 @@ def crear_programa(request):
             'form': form,
             'accion': 'Crear'
             }
-        return render(request, 'programa/crear_programa.html', contexto)
+        return render(request, 'programa/crear_actualizar_programa.html', contexto)
+    
+@login_required
+def actualizar_programa(request, id):
+    programa = Programa.objects.get(id=id)
+    if request.method == 'POST':
+        form = ProgramaForm(request.POST, instance=programa)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Los datos del programa fueron actualizados correctamente") 
+        else:
+            messages.error(request, "Verifique los datos e intente nuevamente")
+        return redirect(reverse('listar-programa')) 
+    else:
+        form = ProgramaForm(instance=programa)
+        contexto = {
+            'form': form,
+            'accion': 'Actualizar'
+            }
+        return render(request, 'programa/crear_actualizar_programa.html', contexto)
+    
+@login_required
+def eliminar_programa(request, id):
+    try:
+        programa = Programa.objects.get(id=id)
+        programa.delete()
+        messages.success(request, "Los datos del programa fueron eliminados correctamente") 
+    except ObjectDoesNotExist:
+        messages.error(request, "El programa no existe en la base de datos")
+    return redirect(reverse('listar-programa')) 
+    
+    

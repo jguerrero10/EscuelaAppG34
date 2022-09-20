@@ -14,5 +14,7 @@ urlpatterns = [
     path('eliminar/profesor/<int:id>', eliminar_profesor, name='eliminar-nombre'),
     path('agregar/permisos/', agregar_permisos, name='agregar-permiso'),
     path('listar/programa/', listar_programa, name='listar-programa'),
-    path('crear/programa/', crear_programa, name='crear-programa')
+    path('crear/programa/', crear_programa, name='crear-programa'),
+    path('actualizar/programa/<int:id>', actualizar_programa, name='actualizar-programa'),
+    path('eliminar/programa/<int:id>', eliminar_programa, name='eliminar-programa')
 ]

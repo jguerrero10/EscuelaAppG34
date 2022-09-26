@@ -19,15 +19,19 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'lista-profesor' %}">Profesores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'listar-programa' %}">Programas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'listar-rol' %}">Roles</a>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'lista-profesor' %}">Profesores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'listar-programa' %}">Programas</a>
+                            </li>
+                            {% if request.user.is_staff %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'listar-rol' %}">Roles</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="">Contactenos</a>
                         </li>

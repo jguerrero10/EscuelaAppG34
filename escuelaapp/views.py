@@ -5,7 +5,7 @@ from .forms import *
 from django.contrib.auth.models import Permission, User, Group
 from .models import *
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -75,12 +75,14 @@ def agregar_permisos(request):
         rol.permissions.set(permisos)
         return HttpResponse("Hecho")
 
-@login_required(login_url='/login/') 
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.view_profesor', raise_exception=True) 
 def list_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, 'profesor/list_profesor.html', {'profesores': profesores})
 
-@login_required(login_url='/login/') 
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.add_profesor', raise_exception=True) 
 def crear_profesor(request):
     if request.method == 'POST':
         form = ProfesorForm(request.POST)
@@ -110,7 +112,8 @@ def crear_profesor(request):
         form = ProfesorForm()
         return render(request, 'profesor/crear_profesor.html', {'form': form})
 
-@login_required(login_url='/login/')    
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.change_profesor', raise_exception=True)   
 def actualizar_profesor(request, id):
     profesor = Profesor.objects.get(id=id)
     if request.method == 'POST':
@@ -125,7 +128,8 @@ def actualizar_profesor(request, id):
         form = ProfesorForm(instance=profesor)
         return render(request, 'profesor/crear_profesor.html', {'form': form})
 
-@login_required(login_url='/login/')  
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.delete_profesor', raise_exception=True) 
 def eliminar_profesor(request, id):
     profesor = Profesor.objects.get(id=id)
     profesor.delete()
@@ -133,11 +137,13 @@ def eliminar_profesor(request, id):
     return render(request, 'profesor/mensaje.html', {'mensaje': mensaje})
 
 @login_required(login_url='/login/')
+@permission_required('escuelaapp.view_programa', raise_exception=True) 
 def listar_programa(request):
     programas = Programa.objects.all() # select * from escuelapp_programa
     return render(request, 'programa/listar_programa.html', {'programas': programas})
 
 @login_required(login_url='/login/')
+@permission_required('escuelaapp.add_programa', raise_exception=True) 
 def crear_programa(request):
     if request.method == 'POST':
         form = ProgramaForm(request.POST)
@@ -155,7 +161,8 @@ def crear_programa(request):
             }
         return render(request, 'programa/crear_actualizar_programa.html', contexto)
     
-@login_required
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.change_programa', raise_exception=True) 
 def actualizar_programa(request, id):
     programa = Programa.objects.get(id=id)
     if request.method == 'POST':
@@ -174,7 +181,8 @@ def actualizar_programa(request, id):
             }
         return render(request, 'programa/crear_actualizar_programa.html', contexto)
     
-@login_required
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.delete_programa', raise_exception=True)
 def eliminar_programa(request, id):
     try:
         programa = Programa.objects.get(id=id)
@@ -184,4 +192,62 @@ def eliminar_programa(request, id):
         messages.error(request, "El programa no existe en la base de datos")
     return redirect(reverse('listar-programa')) 
 
-    
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.view_estudiante', raise_exception=True)
+def listar_estudiante(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.add_estudiante', raise_exception=True)
+def crear_estudiante(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.change_estudiante', raise_exception=True)
+def actualizar_estudiante(request, id):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.delete_estudiante', raise_exception=True)
+def eliminar_estudiante(request, id):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.view_materia', raise_exception=True)
+def listar_materia(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.add_materia', raise_exception=True)
+def crear_materia(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.change_materia', raise_exception=True)
+def actualizar_materia(request, id):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.delete_materia', raise_exception=True)
+def eliminar_materia(request, id):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.view_seguimiento', raise_exception=True)
+def listar_seguimiento(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.add_seguimiento', raise_exception=True)
+def crear_seguimiento(request):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.change_seguimiento', raise_exception=True)
+def actualizar_seguimiento(request, id):
+    pass
+
+@login_required(login_url='/login/')
+@permission_required('escuelaapp.delete_seguimiento', raise_exception=True)
+def eliminar_seguimiento(request, id):
+    pass
